@@ -26,18 +26,15 @@ class Quiz extends StatefulWidget {
 /// State for widget Quiz.
 class _QuizState extends State<Quiz> {
   // var activeScreen = Home();
-  Widget activeScreen = Home();
-  void swicthScreen() {
-    setState(() {
-      activeScreen = Questions();
-    });
-  }
+  var activeScreen = 'Home';
+  
   /* #region Lifecycle */
   @override
-  void initState() {
-    super.initState();
-    // Initial state initialization
-  }
+  // void initState() {
+  //   activeScreen = Home(swicthScreen);
+  //   super.initState();
+  //   // Initial state initialization
+  // }
   
   @override
   void didUpdateWidget(covariant Quiz oldWidget) {
@@ -58,16 +55,27 @@ class _QuizState extends State<Quiz> {
     super.dispose();
   }
   /* #endregion */
-  
+  void swicthScreen() {
+    setState(() {
+      activeScreen = 'Questions';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    Widget screenWidget = Home(swicthScreen);
+      if(activeScreen == 'Questions') {
+        screenWidget = const Questions();
+      } else{
+        screenWidget = Home(swicthScreen);
+      }
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: activeScreen,
+      home: screenWidget,
     );
   }
 }
