@@ -65,7 +65,9 @@ class _QuizState extends State<Quiz> {
   Widget build(BuildContext context) {
     Widget screenWidget = Home(swicthScreen);
       if(activeScreen == 'Questions') {
-        screenWidget = const Questions();
+        screenWidget = Container(
+          color: Theme.of(context).colorScheme.primary,
+          child: Questions(),);
       } else{
         screenWidget = Home(swicthScreen);
       }
@@ -73,6 +75,7 @@ class _QuizState extends State<Quiz> {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: Colors.deepPurple, 
         useMaterial3: true,
       ),
       home: screenWidget,
