@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:appdemo/quizapp/screens/home.dart';
 import 'package:appdemo/quizapp/screens/questions.dart';
-
+import 'package:appdemo/quizapp/data/quizdata.dart';
+import 'package:appdemo/quizapp/screens/results_question.dart';
 /// {@template quiz}
 /// Quiz widget.
 /// {@endtemplate}
@@ -14,9 +14,9 @@ class Quiz extends StatefulWidget {
     super.key, // ignore: unused_element
   });
   
-  @internal
-  // static _QuizState? maybeOf(BuildContext context) =>
-  //   context.findAncestorStateOfType<_QuizState>();
+  // @internal
+  // // static _QuizState? maybeOf(BuildContext context) =>
+  // //   context.findAncestorStateOfType<_QuizState>();
   
   @override
   State<Quiz> createState() => _QuizState();
@@ -27,7 +27,7 @@ class Quiz extends StatefulWidget {
 class _QuizState extends State<Quiz> {
   // var activeScreen = Home();
   var activeScreen = 'Home';
-  
+  List<String> selectedAnsewrs = [];
   /* #region Lifecycle */
   @override
   // void initState() {
@@ -55,27 +55,44 @@ class _QuizState extends State<Quiz> {
     super.dispose();
   }
   /* #endregion */
+
   void swicthScreen() {
     setState(() {
       activeScreen = 'Questions';
     });
   }
-
+  void chooseAnswer (String answer) {
+   selectedAnsewrs.add(answer);
+   if(selectedAnsewrs.length == arraydata.length) {
+    setState(() {
+      selectedAnsewrs = [];
+      activeScreen = 'Results';
+    });
+   }
+  }
   @override
   Widget build(BuildContext context) {
     Widget screenWidget = Home(swicthScreen);
       if(activeScreen == 'Questions') {
         screenWidget = Container(
           color: Theme.of(context).colorScheme.primary,
-          child: Questions(),);
+          child: Questions(onSelectAnswer: chooseAnswer),);
       } else{
         screenWidget = Home(swicthScreen);
+      }
+      if (activeScreen == 'Results') {
+        screenWidget = ResultsQuestion();
       }
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         scaffoldBackgroundColor: Colors.deepPurple, 
+        textTheme: TextTheme(
+          bodyLarge: TextStyle(decoration: TextDecoration.none),
+          bodyMedium: TextStyle(decoration: TextDecoration.none),
+          bodySmall: TextStyle(decoration: TextDecoration.none),
+        ),
         useMaterial3: true,
       ),
       home: screenWidget,

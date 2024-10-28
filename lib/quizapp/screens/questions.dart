@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:appdemo/quizapp/widget/ansew_button.dart';
 import 'package:appdemo/quizapp/data/quizdata.dart';
-
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:appdemo/quizapp/screens/quiz.dart';
 /// {@template questions}
 /// Questions widget.
 /// {@endtemplate}
@@ -12,7 +12,9 @@ class Questions extends StatefulWidget {
   /// {@macro questions}
   const Questions({
     super.key, // ignore: unused_element
+    required this.onSelectAnswer,
   });
+  final void Function(String answer) onSelectAnswer;
   
   /// The state from the closest instance of this class
   /// that encloses the given context, if any.
@@ -27,7 +29,7 @@ class Questions extends StatefulWidget {
 
 /// State for widget Questions.
 class _QuestionsState extends State<Questions> {
-
+ 
   /* #region Lifecycle */
   @override
   void initState() {
@@ -54,16 +56,18 @@ class _QuestionsState extends State<Questions> {
     super.dispose();
   }
   /* #endregion */
-  var cunrrentQuestionsScreen = 0;
-  void ansewrQuestion () {
+   var cunrrentQuestionsScreen = 0;
+  void ansewrQuestion (String selectedAnsewrs) {
+    widget.onSelectAnswer(selectedAnsewrs);
     setState(() {
       cunrrentQuestionsScreen++;
     });
   }
+
+ 
   @override
     Widget build(BuildContext context) {
       final cunrrentQuestions = arraydata[cunrrentQuestionsScreen];
-
       return SizedBox(
         width: double.infinity,
         child: Container(
@@ -71,19 +75,22 @@ class _QuestionsState extends State<Questions> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
+            children: [
               Text(
                cunrrentQuestions.title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
+                style: GoogleFonts.lato(
+                  color: const Color.fromARGB(255, 232, 191, 253),
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.none,
                 ),  
               ),
               const SizedBox(height: 16),
               ...cunrrentQuestions.questionsShuffle().map((question){
-                return AnsewButton(ansewtetxt: question,onTap: ansewrQuestion,);
+                return AnsewButton(ansewtetxt: question,onTap: (){
+                  ansewrQuestion(question);
+                },);
               })
             ],
           ),
