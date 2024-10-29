@@ -5,6 +5,7 @@ import 'package:appdemo/quizapp/widget/ansew_button.dart';
 import 'package:appdemo/quizapp/data/quizdata.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:appdemo/quizapp/screens/quiz.dart';
+
 /// {@template questions}
 /// Questions widget.
 /// {@endtemplate}

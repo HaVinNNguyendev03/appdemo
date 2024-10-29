@@ -61,11 +61,11 @@ class _QuizState extends State<Quiz> {
       activeScreen = 'Questions';
     });
   }
+  
   void chooseAnswer (String answer) {
    selectedAnsewrs.add(answer);
    if(selectedAnsewrs.length == arraydata.length) {
     setState(() {
-      selectedAnsewrs = [];
       activeScreen = 'Results';
     });
    }
@@ -77,11 +77,11 @@ class _QuizState extends State<Quiz> {
         screenWidget = Container(
           color: Theme.of(context).colorScheme.primary,
           child: Questions(onSelectAnswer: chooseAnswer),);
-      } else{
+      } else if(activeScreen == 'Home') {
         screenWidget = Home(swicthScreen);
       }
       if (activeScreen == 'Results') {
-        screenWidget = ResultsQuestion();
+        screenWidget = ResultsQuestion(chooseAnswers: selectedAnsewrs,swicthScreen: swicthScreen,);
       }
     return MaterialApp(
       title: 'Flutter Demo',
